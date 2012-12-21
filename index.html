@@ -7,8 +7,11 @@
     <link rel="stylesheet" type="text/css" href="sp://resources/css/shared.css">
   </head>
   <body>
+    <h1>Chartbeat Spotify Application</h1>
+
     <div>
-      Chartbeat Spotify Application
+      Will play a song when your domain's concurrents goes above a
+      given value.
     </div>
 
     <form id="setupform">
@@ -20,6 +23,7 @@
       <br/>
       <label for="concurrents">Concurrents:</label>
       <input id="concurrents" name="concurrents" size="6"/>
+      (Current: <span id="current"></span>)
       <br/>
       <label for="songtoplay">Song:</label>
       <input id="songtoplay" name="songtoplay" size="80"/>
@@ -29,6 +33,8 @@
       <i>Hint: you can drag'n'drop the song you want to play on to the
       application icon.</i>
     </div>
+
+    <div><a href="https://github.com/chartbeat/spotifyapp">Source on github</a></div>
 
     <script src="js/jquery-1.8.3.min.js"></script>
     <script src="js/sisyphus.min.js"></script>

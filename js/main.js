@@ -10,7 +10,10 @@ var chartbeat = {};
 chartbeat.App = function() {
   console.log("App()");
 
+  /** How often should we call the Chartbeat API */
   this.frequency = 3000;
+
+  this.checkFirstRun();
 
   var sp = getSpotifyApi();
   this.models = sp.require('$api/models');
@@ -24,6 +27,21 @@ chartbeat.App = function() {
   this.checkApi();
 };
 
+chartbeat.App.prototype.checkFirstRun = function() {
+  if (localStorage["firstRunDone"]) {
+    return;
+  }
+  console.log("First run!");
+
+  // Set up to run for gizmodo.com by default
+  this.setSetting("domain", "gizmodo.com", true);
+  this.setSetting("apikey", "317a25eccba186e0f6b558f45214c0e7", true);
+  this.setSetting("concurrents", "30000", true);
+  this.setSetting("songtoplay", "spotify:track:5Y55FgnTswJip7H7HfCOpa", true);
+
+  localStorage["firstRunDone"] = true;
+};
+
 /**
  * Get a configuration value.
  */
@@ -34,9 +52,11 @@ chartbeat.App.prototype.getSetting = function(setting) {
 /**
  * Set a configuration value.
  */
-chartbeat.App.prototype.setSetting = function(setting, value) {
+chartbeat.App.prototype.setSetting = function(setting, value, dontsave) {
   $('#' + setting)[0].value = value;
-  $.sisyphus().saveAllData();
+  if (!dontsave) {
+    $.sisyphus().saveAllData();
+  }
 };
 
 /**
@@ -44,8 +64,10 @@ chartbeat.App.prototype.setSetting = function(setting, value) {
  */
 chartbeat.App.prototype.handleApi = function(data) {
   var threshold = this.getSetting("concurrents");
-  if (threshold && data.people >= threshold) {
-    console.log("Concurrents: " + data.people + " > " + threshold);
+  var concurrents = data.people;
+  $("#current")[0].innerHTML = "" + concurrents;
+  if (threshold && concurrents >= threshold) {
+    console.log("Concurrents: " + concurrents + " > " + threshold);
     var songToPlay = this.getSetting("songtoplay");
     var player = this.models.player;
     // TODO: This will keep on playing the song > threshold. Probably
