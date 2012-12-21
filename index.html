@@ -5,19 +5,33 @@
     <link rel="stylesheet" type="text/css" href="sp://resources/css/api.css">
     <link rel="stylesheet" type="text/css" href="sp://resources/css/eve.css">
     <link rel="stylesheet" type="text/css" href="sp://resources/css/shared.css">
-
-
   </head>
   <body>
     <div>
-      Hello Spotify!
+      Chartbeat Spotify Application
     </div>
 
+    <form id="setupform">
+      <label for="domain">Domain:</label>
+      <input id="domain" name="domain" size="80"/>
+      <br/>
+      <label for="apikey">API Key:</label>
+      <input id="apikey" name="apikey" size="80"/>
+      <br/>
+      <label for="concurrents">Concurrents:</label>
+      <input id="concurrents" name="concurrents" size="6"/>
+      <br/>
+      <label for="songtoplay">Song:</label>
+      <input id="songtoplay" name="songtoplay" size="80"/>
+    </form>
+
     <div>
-      <button class="sp-button" id="play">Play</button>
+      <i>Hint: you can drag'n'drop the song you want to play on to the
+      application icon.</i>
     </div>
 
     <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/sisyphus.min.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

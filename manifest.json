@@ -1,4 +1,9 @@
 {
+    "AcceptedLinkTypes": [
+        "album",
+        "playlist",
+        "track"
+    ],
     "AppDescription": {
         "en": "Chartbeat Labs Project"
     },
@@ -10,11 +15,11 @@
     },
     "BundleIdentifier": "chartbeat",
     "BundleType": "Application",
-    "BundleVersion": "0.1",
+    "BundleVersion": "0.0.2",
     "Dependencies": {
         "api": "0.2.3",
-        "resources": "0.2.1",
-        "util": "0.2.1"
+        "resources": "0.2.2",
+        "util": "0.2.3"
     },
     "RequiredPermissions": [
         "http://api.chartbeat.com"
