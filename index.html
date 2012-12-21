@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- Spotify CSS files -->
+    <!-- Spotify CSS -->
     <link rel="stylesheet" type="text/css" href="sp://resources/css/api.css">
     <link rel="stylesheet" type="text/css" href="sp://resources/css/eve.css">
     <link rel="stylesheet" type="text/css" href="sp://resources/css/shared.css">
+
+    <!-- App CSS -->
+    <link rel="stylesheet" type="text/css" href="css/main.css">
   </head>
   <body>
     <h1>Chartbeat Spotify Application</h1>
 
-    <div>
+    <div class="intro">
       Will play a song when your domain's concurrents goes above a
       given value.
     </div>
 
-    <form id="setupform">
+    <form class="settings" id="setupform">
       <label for="domain">Domain:</label>
       <input id="domain" name="domain" size="80"/>
       <br/>
@@ -29,12 +32,17 @@
       <input id="songtoplay" name="songtoplay" size="80"/>
     </form>
 
-    <div>
-      <i>Hint: you can drag'n'drop the song you want to play on to the
-      application icon.</i>
+    <div class="hint">
+      Hint: you can drag'n'drop the song you want to play on to the
+      application icon.
     </div>
 
-    <div><a href="https://github.com/chartbeat/spotifyapp">Source on github</a></div>
+    <div class="error" id="error">
+    </div>
+
+    <div class="source">
+      <a href="https://github.com/chartbeat/spotifyapp">Source on github</a>
+    </div>
 
     <script src="js/jquery-1.8.3.min.js"></script>
     <script src="js/sisyphus.min.js"></script>

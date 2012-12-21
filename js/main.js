@@ -20,7 +20,7 @@ chartbeat.App = function() {
   this.models.application.observe(this.models.EVENT.LINKSCHANGED,
                                   this.handleLink.bind(this));
 
-  $("#setupform").sisyphus({"timeout": 3});
+  $("#setupform").sisyphus();
 
   // TODO: Check that all settings have been filled in before
   // starting.
@@ -59,6 +59,10 @@ chartbeat.App.prototype.setSetting = function(setting, value, dontsave) {
   }
 };
 
+chartbeat.App.prototype.setErrorMessage = function(msg) {
+  $("#error")[0].innerHTML = msg;
+};
+
 /**
  * Get's called with the Chartbeat API data.
  */
@@ -66,6 +70,7 @@ chartbeat.App.prototype.handleApi = function(data) {
   var threshold = this.getSetting("concurrents");
   var concurrents = data.people;
   $("#current")[0].innerHTML = "" + concurrents;
+  this.setErrorMessage("");
   if (threshold && concurrents >= threshold) {
     console.log("Concurrents: " + concurrents + " > " + threshold);
     var songToPlay = this.getSetting("songtoplay");
@@ -80,13 +85,30 @@ chartbeat.App.prototype.handleApi = function(data) {
 };
 
 /**
+ * Get's called when there is an error fetching the data.
+ */
+chartbeat.App.prototype.handleApiError = function(req) {
+  console.log("handleApiError(status: " + req.status + ")");
+  try {
+    var data = JSON.parse(req.responseText);
+    console.log("Error: " + data.error);
+    this.setErrorMessage(data.error + " (" + req.status + ")");
+  } catch (e) {
+    console.log("Could not parse JSON response: " + req.responseText);
+    this.setErrorMessage("Unknown error (" + req.status + ")");
+  }
+  window.setTimeout(this.checkApi.bind(this), this.frequency);
+};
+
+/**
  * Call the Chartbeat API -- every this.frequency
  */
 chartbeat.App.prototype.checkApi = function() {
   var domain = this.getSetting("domain");
   var apikey = this.getSetting("apikey");
   var url = "http://api.chartbeat.com/live/quickstats/v3/?apikey=" + apikey + "&host=" + domain;
-  $.getJSON(url, this.handleApi.bind(this));
+  $.getJSON(url, this.handleApi.bind(this))
+   .error(this.handleApiError.bind(this));
 };
 
 /**
