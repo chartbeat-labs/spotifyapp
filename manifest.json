@@ -17,8 +17,7 @@
         "util": "0.2.1"
     },
     "RequiredPermissions": [
-        "http://api.chartbeat.com",
-        "http://ping.chartbeat.net"
+        "http://api.chartbeat.com"
     ],
     "SupportedLanguages": [
         "en"
